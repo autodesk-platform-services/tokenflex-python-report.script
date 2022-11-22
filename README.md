@@ -6,7 +6,7 @@
 [![tls1.2](https://img.shields.io/badge/TLS-1.2-green.svg)](https://www.ietf.org/rfc/rfc5246.txt)
 [![codebeat badge](https://codebeat.co/badges/d9440870-9122-460b-8b9a-3d1b29d46ed2)](https://codebeat.co/projects/github-com-dukedhx-tokenflex-reporting-python-script-master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/4f6821a3553efcc2167d/maintainability)](https://codeclimate.com/github/dukedhx/tokenflex-reporting-python-script/maintainability)
-[![Stackoverflow](https://img.shields.io/badge/ask-stackoverflow-yellow.svg)](https://stackoverflow.com/questions/ask?tags=%5bautodesk-Autodesk Platform Services)
+[![Stackoverflow](https://img.shields.io/badge/ask-stackoverflow-yellow.svg)](https://stackoverflow.com/questions/ask?tags=%5bautodesk-aps)
 
 ## Description
 
@@ -25,7 +25,7 @@ See [video demonstration](https://www.youtube.com/watch?v=jXEAHenxZVE)
 Clone/download this project. We recommended to use [GitHub desktop](https://desktop.github.com). To clone via command line, run the following on Terminal for Mac/Linux or Git Shell for Windows:
 
 ```bash
-git clone https://github.com/Autodesk-Autodesk Platform Services/tokenflex-python-report.script
+git clone https://github.com/autodesk-platform-services/tokenflex-python-report.script
 ```
 
 Make sure to have [Python 2.7](https://www.python.org/downloads/release/python-278/) installed.
@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 ### Pre-requisites
 
-For using this sample, you need an Autodesk developer credentials. Visit the [Autodesk Platform Services Developer Portal](https://developer.autodesk.com), sign up for an account, then [create an app](https://developer.autodesk.com/myapps/create) with access to **Token Flex Usage Data API**. For this new app, use `http://localhost:3000/api/Autodesk Platform Services/callback/oauth` as Callback URL. Finally take note of the **Client ID** and **Client Secret**. For localhost testing:
+For using this sample, you need an Autodesk developer credentials. Visit the [Autodesk Platform Services Developer Portal](https://developer.autodesk.com), sign up for an account, then [create an app](https://developer.autodesk.com/myapps/create) with access to **Token Flex Usage Data API**. For this new app, use `http://localhost:3000/api/aps/callback/oauth` as Callback URL. Finally take note of the **Client ID** and **Client Secret**. For localhost testing:
 
 - APS_CLIENT_ID
 - APS_CLIENT_SECRET
