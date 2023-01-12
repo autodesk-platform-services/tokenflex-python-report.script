@@ -1,6 +1,6 @@
 #####################################################################
 ## Copyright (c) Autodesk, Inc. All rights reserved
-## Written by Forge Partner Development
+## Written by APS Partner Development
 ##
 ## Permission to use, copy, modify, and distribute this software in
 ## object code form for any purpose and without fee is hereby granted,
@@ -19,10 +19,10 @@
 import os
 from urlparse import urljoin
 access_token_url = os.getenv(
-    'FORGE_TOKEN_URL',
+    'APS_TOKEN_URL',
     'https://developer.api.autodesk.com/authentication/v1/gettoken')
-base_url = os.getenv('FORGE_BASE_URL', 'https://developer.api.autodesk.com')
+base_url = os.getenv('APS_BASE_URL', 'https://developer.api.autodesk.com')
 base_tokenflex_api = os.getenv(
-    'FORGE_TOKENFLEX_URL',
+    'APS_TOKENFLEX_URL',
     'https://developer.api.autodesk.com/tokenflex/')
-authorize_url = os.getenv('FORGE_AUTH_URL', 'https://developer.api.autodesk.com/authentication/v1/authorize')
+authorize_url = os.getenv('APS_AUTH_URL', 'https://developer.api.autodesk.com/authentication/v1/authorize')

@@ -1,6 +1,6 @@
 #####################################################################
 ## Copyright (c) Autodesk, Inc. All rights reserved
-## Written by Forge Partner Development
+## Written by APS Partner Development
 ##
 ## Permission to use, copy, modify, and distribute this software in
 ## object code form for any purpose and without fee is hereby granted,
@@ -27,18 +27,18 @@ from urlparse import urljoin
 
 def start():
     parser = argparse.ArgumentParser(
-        description='Run Forge authentication script.')
-    parser.add_argument('--FORGE_CLIENT_ID', required=True)
-    parser.add_argument('--FORGE_CLIENT_SECRET', required=True)
-    parser.add_argument('--FORGE_CALLBACK_URL', required=True)
+        description='Run APS authentication script.')
+    parser.add_argument('--APS_CLIENT_ID', required=True)
+    parser.add_argument('--APS_CLIENT_SECRET', required=True)
+    parser.add_argument('--APS_CALLBACK_URL', required=True)
     state.args = parser.parse_args()
     authorization_url = urljoin(
         env.authorize_url,
         '?response_type=code&client_id=' +
-        state.args.FORGE_CLIENT_ID +
+        state.args.APS_CLIENT_ID +
         '&redirect_uri=' +
         urllib.quote_plus(
-            state.args.FORGE_CALLBACK_URL) +
+            state.args.APS_CALLBACK_URL) +
         '&scope=data:read%20data:write')
     try:
         import webbrowser

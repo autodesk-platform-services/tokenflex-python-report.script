@@ -1,6 +1,6 @@
 #####################################################################
 ## Copyright (c) Autodesk, Inc. All rights reserved
-## Written by Forge Partner Development
+## Written by APS Partner Development
 ##
 ## Permission to use, copy, modify, and distribute this software in
 ## object code form for any purpose and without fee is hereby granted,
@@ -33,25 +33,25 @@ import BaseHTTPServer
 httpd = None
 
 
-class ForgeCallbackHTTPRequestHandler(
+class APSCallbackHTTPRequestHandler(
         SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET(self):
         global httpd
         bits = urlparse.urlparse(self.path)
-        if bits.path == urlparse.urlparse(state.args.FORGE_CALLBACK_URL).path:
+        if bits.path == urlparse.urlparse(state.args.APS_CALLBACK_URL).path:
             state.code = urlparse.parse_qs(bits.query)['code']
             data = {
                 'client_id': os.getenv(
-                    'FORGE_CLIENT_ID',
-                    state.args.FORGE_CLIENT_ID),
+                    'APS_CLIENT_ID',
+                    state.args.APS_CLIENT_ID),
                 'client_secret': os.getenv(
-                    'FORGE_CLIENT_SECRET',
-                    state.args.FORGE_CLIENT_SECRET),
+                    'APS_CLIENT_SECRET',
+                    state.args.APS_CLIENT_SECRET),
                 'grant_type': 'authorization_code',
                 'code': state.code,
                 'redirect_uri': os.getenv(
-                    'FORGE_CALLBACK_URL',
-                    state.args.FORGE_CALLBACK_URL)}
+                    'APS_CALLBACK_URL',
+                    state.args.APS_CALLBACK_URL)}
             headers = {'Content-Type': 'application/x-www-form-urlencoded'}
             resp = requests.post(
                 env.access_token_url,
@@ -85,6 +85,6 @@ def startHttpServer():
     global httpd
     PORT = 3000
     httpd = ThreadingHTTPServer(
-        ("", PORT), ForgeCallbackHTTPRequestHandler)
+        ("", PORT), APSCallbackHTTPRequestHandler)
     print "serving at port", PORT
     httpd.serve_forever()
