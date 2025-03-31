@@ -17,12 +17,12 @@
 #####################################################################
 
 import os
-from urlparse import urljoin
+from urllib.parse import urljoin
 access_token_url = os.getenv(
     'APS_TOKEN_URL',
-    'https://developer.api.autodesk.com/authentication/v1/gettoken')
+    'https://developer.api.autodesk.com/authentication/v2/token')
 base_url = os.getenv('APS_BASE_URL', 'https://developer.api.autodesk.com')
 base_tokenflex_api = os.getenv(
     'APS_TOKENFLEX_URL',
     'https://developer.api.autodesk.com/tokenflex/')
-authorize_url = os.getenv('APS_AUTH_URL', 'https://developer.api.autodesk.com/authentication/v1/authorize')
+authorize_url = os.getenv('APS_AUTH_URL', 'https://developer.api.autodesk.com/authentication/v2/authorize')
