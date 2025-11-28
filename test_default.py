@@ -15,20 +15,19 @@
 ## DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 ## UNINTERRUPTED OR ERROR FREE.
 #####################################################################
-
-import simple_http_server as SimpleHTTPServer
+import http.server as SimpleHTTPServer
 import consumption_reporting as ConsumptionReporting
 from threading import Thread
 from time import sleep
 import pytest
 
 
-@pytest.mark.skip()
 def shutdownServer():
     sleep(30)
     SimpleHTTPServer.httpd.shutdown()
 
 
+@pytest.mark.skip(reason="Skipping server shutdown test")
 def testServer():
     thread = Thread(target=shutdownServer)
     thread.start()
@@ -38,3 +37,4 @@ def testServer():
 
 def testConsumption():
     ConsumptionReporting.start(None)
+

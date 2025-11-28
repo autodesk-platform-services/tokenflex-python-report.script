@@ -1,30 +1,12 @@
-#####################################################################
-## Copyright (c) Autodesk, Inc. All rights reserved
-## Written by APS Partner Development
-##
-## Permission to use, copy, modify, and distribute this software in
-## object code form for any purpose and without fee is hereby granted,
-## provided that the above copyright notice appears in all copies and
-## that both that copyright notice and the limited warranty and
-## restricted rights notice below appear in all supporting
-## documentation.
-##
-## AUTODESK PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS.
-## AUTODESK SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
-## MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  AUTODESK, INC.
-## DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
-## UNINTERRUPTED OR ERROR FREE.
-#####################################################################
-
 import argparse
 import json
 import os
 import polling
 import requests
 import sys
-import urllib
+import urllib.parse as urllib
 import config.env as env
-from urlparse import urljoin
+from urllib.parse import urljoin
 
 
 def getRespJson(url, access_token):
@@ -36,15 +18,16 @@ def getRespJson(url, access_token):
 
 
 def downloadCsvFile(download_url, download_filename):
-    print 'Downloading CSV file ...'
+    print('Downloading CSV file ...')
     resp = requests.get(download_url)
     resp.raise_for_status()
     if resp.status_code == 200:
-        open(download_filename, 'wb').write(resp.content)
+        with open(download_filename, 'wb') as f:
+            f.write(resp.content)
 
 
 def getContracts(access_token):
-    print 'Getting Contracts ...'
+    print('Getting Contracts ...')
     return getRespJson(
         urljoin(
             env.base_tokenflex_api,
@@ -53,7 +36,7 @@ def getContracts(access_token):
 
 
 def getExportRequestsDetails(access_token, contract_number, request_key):
-    print 'Getting Export Request Details ...'
+    print('Getting Export Request Details ...')
     return getRespJson(
         urljoin(
             env.base_tokenflex_api,
@@ -65,7 +48,7 @@ def getExportRequestsDetails(access_token, contract_number, request_key):
 
 
 def pollExportRequestDetails(access_token, contract_number, request_key):
-    print 'Polling Export Request Details ...'
+    print('Polling Export Request Details ...')
     export_results_url = urljoin(
         env.base_tokenflex_api,
         'v1/export/' +
@@ -86,12 +69,12 @@ def pollExportRequestDetails(access_token, contract_number, request_key):
 def check_success(response):
     if response['requestStatus'] == 'Error':
         raise Exception('Download request failed!')
-    print 'Response Status: ' + response['requestStatus']
+    print('Response Status: ' + response['requestStatus'])
     return 'downloadUrl' in response
 
 
 def submitExportRequest(access_token, contract_number):
-    print 'Submitting export for contract: ' + contract_number
+    print('Submitting export for contract: ' + contract_number)
     export_request_url = urljoin(
         env.base_tokenflex_api,
         'v1/export/' +
@@ -133,17 +116,17 @@ def start(access_token):
         contracts = getContracts(access_token)
         # Submit an Export request
         for contract in contracts:
-            print '*** Found contract: ' + contract['contractNumber']
+            print('*** Found contract: ' + contract['contractNumber'])
             contract_number = contract['contractNumber']
             export_request = submitExportRequest(access_token, contract_number)
             # Poll for request results
             request_key = export_request['requestKey']
-            print '*** Submitted export request: ' + request_key
+            print('*** Submitted export request: ' + request_key)
             request_details = getExportRequestsDetails(
                 access_token, contract_number, request_key)
             if request_details == 'Download':
                 request_status = request_details['requestStatus']
-                print '*** Retrieved export status: ' + request_status
+                print('*** Retrieved export status: ' + request_status)
             else:
                 poll_status = pollExportRequestDetails(
                     access_token, contract_number, request_key)
@@ -151,13 +134,13 @@ def start(access_token):
                     request_details = getExportRequestsDetails(
                         access_token, contract_number, request_key)
                     request_status = request_details['requestStatus']
-                    print '*** Retrieved export status: ' + request_status
+                    print('*** Retrieved export status: ' + request_status)
                 else:
                     raise Exception('Error occurred!')
             download_url = request_details['downloadUrl']
-            print '*** Download url: ' + download_url
+            print('*** Download url: ' + download_url)
             download_filename = request_details['downloadFileName']
             downloadCsvFile(download_url, download_filename)
-            print '*** Downloaded file: ' + download_filename
+            print('*** Downloaded file: ' + download_filename)
     else:
-        print 'Invalid access_token. Exiting!'
+        print('Invalid access_token. Exiting!')
